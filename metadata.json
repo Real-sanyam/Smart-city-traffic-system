@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix Remix NetraFlow: Multi-Camera Vehicle Re-ID",
+  "description": "Multi-camera vehicle re-identification in dense traffic without license plates using windshield fine-grid FASTag localization, dynamic tyre pressure profiling, appearance embeddings, and probabilistic origin-destination flow matrices.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

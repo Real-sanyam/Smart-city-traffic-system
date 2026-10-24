@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId", "email"]
+    },
+    "TrafficStudy": {
+      "title": "TrafficStudy",
+      "description": "Multi-camera vehicle re-identification and origin-destination traffic flow study",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "city": { "type": "string" },
+        "junctionName": { "type": "string" },
+        "cameras": { "type": "string" },
+        "odMatrix": { "type": "string" },
+        "summary": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title"]
+    },
+    "ReidInsight": {
+      "title": "ReidInsight",
+      "description": "AI analysis and spatio-temporal flow reasoning report",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "studyId": { "type": "string" },
+        "query": { "type": "string" },
+        "analysisText": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "analysisText"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile collection"
+    },
+    "/trafficStudies/{studyId}": {
+      "schema": "TrafficStudy",
+      "description": "Saved vehicle re-ID traffic flow experiments and runs"
+    },
+    "/reidInsights/{insightId}": {
+      "schema": "ReidInsight",
+      "description": "AI reasoning and traffic insights"
+    }
+  }
+}

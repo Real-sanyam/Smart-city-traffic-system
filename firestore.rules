@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if isOwner(userId) || userId == "guest_engineer";
+    }
+
+    // Traffic studies - allows both authenticated and guest studies
+    match /trafficStudies/{studyId} {
+      allow read: if true;
+      allow create: if request.resource.data.userId is string
+                    && request.resource.data.title is string
+                    && (request.auth == null || request.resource.data.userId == request.auth.uid || request.resource.data.userId == "guest_engineer");
+      allow update, delete: if isAuthenticated()
+                            && (resource.data.userId == request.auth.uid || resource.data.userId == "guest_engineer");
+    }
+
+    // Re-ID insights
+    match /reidInsights/{insightId} {
+      allow read: if true;
+      allow create: if request.resource.data.userId is string
+                    && (request.auth == null || request.resource.data.userId == request.auth.uid || request.resource.data.userId == "guest_engineer");
+      allow update, delete: if isAuthenticated()
+                            && (resource.data.userId == request.auth.uid || resource.data.userId == "guest_engineer");
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
